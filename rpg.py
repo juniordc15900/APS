@@ -143,8 +143,8 @@ class Application(Frame):
             self.widgetsDeletarConta()
             self.nomeLabel = Label(self,fg="blue",text="Conta deletada com sucesso").grid(row=4) 
         
-    def widgetsVisualizarConta(self):
-        print('foi')
+    def widgetsVisualizarConta(self,opcao):
+        print(opcao)
         # self.limpaTela()
         # self.text1 = StringVar()
         # self.nomeLabel = Label(self,text="Nome").grid(row=0)
@@ -233,29 +233,31 @@ class Application(Frame):
             self.nomeLabel = Label(self,fg="blue",text=self.jogo.visualizaPersonagem(verificaPersonagem)).grid(row=4)
     
     def widgetsMenuPrincipal(self):
-        conta = ContaDTO(username='juniordc159', password='12345',chars=[Personagem(conta='juniordc159',apelido='Char1',classe='Sacerdote'),Personagem(conta='juniordc159',apelido='Char2',classe='Guerreiro'),Personagem(conta='juniordc159',apelido='Char3',classe='Arqueiro')])
+        conta = ContaDTO(username='juniordc159', password='12345',chars=[Personagem(conta='juniordc159',apelido='Char1',classe='Sacerdote'),Personagem(conta='juniordc159',apelido='Char2',classe='Guerreiro'),Personagem(conta='juniordc159',apelido='Char3',classe='Arqueiro'),Personagem(conta='juniordc159',apelido='Char4',classe='Guerreiro'),Personagem(conta='juniordc159',apelido='Char5',classe='Sacerdote')])
         
         image_path = os.path.join(os.path.dirname(__file__), 'gear2.png')
         print(image_path)
         image = customtkinter.CTkImage(dark_image=Image.open(image_path),size=(30,30))
-        config_label = customtkinter.CTkButton(self.master, image = image,text='' ,command=self.widgetsVisualizarConta(),width=25,height=25,fg_color='#444444',hover_color='#888888',corner_radius=15)
+        config_label = customtkinter.CTkButton(self.master, image = image,text='' ,command=self.widgetsVisualizarConta('foi'),width=25,height=25,fg_color='#444444',hover_color='#888888',corner_radius=15)
         config_label.place(relx=1, rely=0, x=-35, y=30, anchor='ne')
         
         user_label = customtkinter.CTkLabel(self.master, text=conta.username,font=("Helvetica",25,"bold"))
         user_label.place(x=30, y=30, anchor='nw')
         select_char_label = customtkinter.CTkLabel(self.master, text='Selecione seu Personagem:',font=("Helvetica",15,"bold"))
         select_char_label.place(x=30, y=100, anchor='nw')
-        char_button = customtkinter.CTkButton(self.master, text='Criar Personagem', command=self.widgetsVisualizarConta(),fg_color='#444444',hover_color='#888888',corner_radius=15)
+        char_button = customtkinter.CTkButton(self.master, text='Criar Personagem', command=self.widgetsVisualizarConta('foi'),fg_color='#444444',hover_color='#888888',corner_radius=15)
         char_button.place(relx=1, rely=0, x=-25, y=100, anchor='ne')
-        frame_char = customtkinter.CTkFrame(self.master,corner_radius=20,width=540)
+        # frame_char = customtkinter.CTkFrame(self.master,corner_radius=20,width=540)
+        # frame_char.place(x=30,y=145)
+        frame_char = customtkinter.CTkScrollableFrame(self.master,corner_radius=20,width=320,height=50)
         frame_char.place(x=30,y=145)
         
         opcao_selecionada = customtkinter.StringVar()
         for i,char in enumerate(conta.chars):
             char_select_button = customtkinter.CTkRadioButton(frame_char,text=f'Nickname: {char.getApelido()}           Classe: {char.getClasse()}',variable=opcao_selecionada,value=char.getApelido())
             char_select_button.pack(padx=20,pady=20)
-        fight_button = customtkinter.CTkButton(self.master, text='Batalhar', command=self.widgetsVisualizarConta(),fg_color='#900603',hover_color='#A91B0D',corner_radius=15)
-        fight_button.place(x=370,y=360,anchor='ne')
+        fight_button = customtkinter.CTkButton(self.master, text='Batalhar', command=self.widgetsVisualizarConta(opcao_selecionada),fg_color='#900603',hover_color='#A91B0D',corner_radius=50,width=150,height=150)
+        fight_button.place(x=570,y=190,anchor='ne')
         
     def widgetsMenuConta(self):
         nome_contas = os.listdir('contas/')
