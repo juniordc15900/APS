@@ -290,5 +290,6 @@ class Application(Frame):
 root = customtkinter.CTk()
 root.geometry("600x400")
 app = Application(master=root)
+root.title('Rpg APS')
 root.mainloop()
 root.destroy()
