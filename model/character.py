@@ -4,7 +4,7 @@ import random
 
 class Character:
     
-    def __init__(self, name, _class: Classe, user : User, level, health, exp, damage):
+    def __init__(self, name, _class: Classe, user : User, level=None, health=None, exp=None, damage=None):
         self.name = name
         self._class = _class
         self.user = user

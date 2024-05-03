@@ -160,7 +160,12 @@ class App(tk.Tk):
 	def createChar(self):
 		name = self.createchar_frame.winfo_children()[2].get()
 		_class = self.createchar_frame.winfo_children()[4].get()
-		char = self.controler.createUserCharacter(name, _class, self.logged_user)
+		char_input = Character(name=name,
+                           		_class=_class,
+                             	user=self.logged_user
+                    			)
+		char_usecase = character_factory()
+		char = char_usecase.createUserCharacter(char_input)
 
 		if char is None:
 			messagebox.showinfo("Criação", "Criação de personagem falhou")
@@ -171,7 +176,8 @@ class App(tk.Tk):
 			self.main_frame.pack(fill="both", expand=True)
 
 	def deleteChar(self, char : Character):
-		self.controler.deleteUserCharacter(char, self.logged_user)
+		char_usecase = character_factory()
+		char = char_usecase.deleteUserCharacter(char)
 		self.main_frame.pack_forget()
 		self.drawMainScreen()
 		self.main_frame.pack(fill="both", expand=True)

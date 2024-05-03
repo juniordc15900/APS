@@ -31,5 +31,5 @@ class characterUseCase:
     
     def deleteUserCharacter(self, character: Character):
         
-        self.character_repository.deletecharacter(character)
+        self.character_repository.deleteUserCharacter(character)
     

@@ -35,12 +35,12 @@ class CharacterRepository(CharacterInterface):
 
         conn.commit()
         
-    def insertCharacter(self, character: Character, user: User):
+    def insertCharacter(self, character: Character):
 
         conn, cursor = get_db()
         
         try:
-            statement = "SELECT * FROM personagens WHERE nome = ?", (character.name,)
+            statement = """SELECT * FROM personagens WHERE nome = '{character.name}';"""
             cursor.execute(statement)
             query = cursor.fetchone()
             
@@ -48,7 +48,7 @@ class CharacterRepository(CharacterInterface):
                 print("Já existe personagem com esse nome.")
                 return None
             
-            statement = """INSERT INTO personagens (
+            statement = f"""INSERT INTO personagens (
                         nome,
                         classe, 
                         user_username, 
@@ -56,7 +56,7 @@ class CharacterRepository(CharacterInterface):
                         health,
                         exp,
                         damage) VALUES 
-                        (?, ?, ?, ?, ?, ?, ?)""", (character.name, character._class, user.username, character.level, character.health, character.exp, character.damage)
+                        ('{character.name}', '{character._class}', '{character.user.username}', '{character.level}', '{character.health}', '{character.exp}', '{character.damage}');"""
             
             cursor.execute(statement)
             conn.commit()
@@ -73,7 +73,7 @@ class CharacterRepository(CharacterInterface):
         conn, cursor = get_db()
         
         try:
-            statement = "DELETE FROM personagens WHERE character = ?", (character.character,)
+            statement = f"""DELETE FROM personagens WHERE nome = '{character.name}';"""
             cursor.execute(statement)
             conn.commit()
         
@@ -87,7 +87,7 @@ class CharacterRepository(CharacterInterface):
         conn, cursor = get_db()
         print(f'repo char: {userRef.username}')
         try:
-            statement = f"""SELECT * FROM personagens WHERE user_username = {userRef.username};"""
+            statement = f"""SELECT * FROM personagens WHERE user_username = '{userRef.username}';"""
             cursor.execute(statement)
             query = cursor.fetchall()
             print(f'query repo char: {query}')
