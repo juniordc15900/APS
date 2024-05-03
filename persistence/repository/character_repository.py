@@ -41,7 +41,7 @@ class CharacterRepository(CharacterInterface):
         
         try:
             statement = "SELECT * FROM personagens WHERE nome = ?", (character.name,)
-            conn.execute(statement)
+            cursor.execute(statement)
             query = cursor.fetchone()
             
             if query:
@@ -58,7 +58,7 @@ class CharacterRepository(CharacterInterface):
                         damage) VALUES 
                         (?, ?, ?, ?, ?, ?, ?)""", (character.name, character._class, user.username, character.level, character.health, character.exp, character.damage)
             
-            conn.execute(statement)
+            cursor.execute(statement)
             conn.commit()
             
             return character
@@ -87,8 +87,8 @@ class CharacterRepository(CharacterInterface):
         conn, cursor = get_db()
         print(f'repo char: {userRef.username}')
         try:
-            statement = f"""SELECT * FROM personagens WHERE user_username = '{userRef.username}';"""
-            conn.execute(statement)
+            statement = f"""SELECT * FROM personagens WHERE user_username = {userRef.username};"""
+            cursor.execute(statement)
             query = cursor.fetchall()
             print(f'query repo char: {query}')
             if not query:

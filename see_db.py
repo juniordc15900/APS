@@ -1,8 +1,10 @@
 import sqlite3
 
+from infra.db import get_db
+
 # Conecte-se ao banco de dados
-conn = sqlite3.connect('main.db')
-cursor = conn.cursor()
+conn,cursor = get_db()
+
 
 # Liste as tabelas
 cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
@@ -10,11 +12,11 @@ print(cursor.fetchall())
 
 
 user = 123
-cursor.execute(f"SELECT * FROM personagens WHERE user_username = '{user}';")
+cursor.execute(f"SELECT * FROM user;")
 print(cursor.fetchall())
 # cursor.execute("DROP TABLE personagens;")
 # print(cursor.fetchall())
-cursor.execute("PRAGMA table_info(personagens);")
+cursor.execute("PRAGMA table_info(user);")
 print(cursor.fetchall())
 
 # classes = ['Guerreiro', 'Mago', 'Arqueiro', 'Assassino']

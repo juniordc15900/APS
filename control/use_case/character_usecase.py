@@ -1,5 +1,6 @@
 
-
+import sys
+sys.path.append('.')
 from typing import List
 from model.character import Character
 from model.user import User

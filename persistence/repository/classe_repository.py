@@ -42,7 +42,7 @@ class ClasseRepository(ClasseInterface):
         
         try:
             statement = "SELECT * FROM user WHERE classe = ?", (classe.classe)
-            conn.execute(statement)
+            cursor.execute(statement)
             query = cursor.fetchone()
             
             if query:
@@ -57,7 +57,7 @@ class ClasseRepository(ClasseInterface):
                         percent_lvl_hp) VALUES 
                         (?, ?, ?, ?)""", (classe.classe, classe.base_dmg, classe.base_hp, classe.percent_lvl_dmg, classe.percent_lvl_hp)
             
-            conn.execute(statement)
+            cursor.execute(statement)
             conn.commit()
             
             return classe

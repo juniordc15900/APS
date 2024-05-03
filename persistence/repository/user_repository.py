@@ -24,23 +24,23 @@ class UserRepository(UserInterface):
     def insertUser(self, user: User):
         conn,cursor = get_db()
         try:
-            statement = """SELECT * FROM user 
-                            WHERE username = ? AND 
-                            password = ?""", (user.username, user.password)
-            conn.execute(statement)
+            statement = f"""SELECT * FROM user 
+                            WHERE username = '{user.username}' AND 
+                            password = '{user.password}';"""
+            cursor.execute(statement)
             query = cursor.fetchone()
-            
+            print(query)
             if query:
                 print("Já existe um usuário com esse nome.")
                 conn.close()
                 return None
             
-            statement = """INSERT INTO user 
+            statement = f"""INSERT INTO user 
                         (username, 
                         password) VALUES 
-                        (?, ?)""", (user.username, user.password,)
+                        ('{user.username}', '{user.password}');"""
             
-            conn.execute(statement)
+            cursor.execute(statement)
             conn.commit()
             
             return user
@@ -56,9 +56,11 @@ class UserRepository(UserInterface):
         conn,cursor = get_db()
         
         try:
-            statement = "DELETE FROM personagens WHERE user_username = ?", (user.username,)
+            statement = f"""DELETE FROM personagens WHERE user_username = '{user.username}';"""
             cursor.execute(statement)
-            statement = "DELETE FROM user WHERE username = ?", (user.username,)
+            statement = f"""DELETE FROM user WHERE username = '{user.username}';"""
+            cursor.execute(statement)
+            
             conn.commit()
         
         except Exception as e:
@@ -72,7 +74,7 @@ class UserRepository(UserInterface):
         conn,cursor = get_db()
         
         try:
-            statement = f"SELECT * FROM user WHERE username = {user.username} AND password = {user.password};"
+            statement = f"""SELECT * FROM user WHERE username = '{user.username}' AND password = '{user.password}';"""
             cursor.execute(statement)
             query = cursor.fetchone()
             print(f'query: {query}')

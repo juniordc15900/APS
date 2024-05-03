@@ -126,7 +126,9 @@ class App(tk.Tk):
 		username = self.login_frame.winfo_children()[2].get()
 		password = self.login_frame.winfo_children()[4].get()
 
-		user = self.controler.userRegister(username, password)
+		user_input = User(username,password)
+		user_usecase = user_factory()
+		user = user_usecase.userRegister(user_input)
 
 		if user is None:
 			messagebox.showinfo("Registro", "Registro Falhou")
@@ -142,7 +144,9 @@ class App(tk.Tk):
 	def deleteUser(self):
 		username = self.login_frame.winfo_children()[2].get()
 		password = self.login_frame.winfo_children()[4].get()
-		self.controler.deleteUser(username, password)
+		user_input = User(username,password)
+		user_usecase = user_factory()
+		user = user_usecase.deleteUser(user_input)
 		messagebox.showinfo("Apagar", "Usuário foi apagado")
 
 
